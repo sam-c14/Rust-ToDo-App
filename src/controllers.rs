@@ -89,7 +89,9 @@ pub async fn update_single_task(
 
     let description = user_data.description;
 
-    match update_task(id as usize, app_data, title, description) {
+    let status = user_data.status;
+
+    match update_task(id as usize, app_data, title, description, status) {
         Ok(task) => HttpResponse::Ok().json(task),
         Err(e) => HttpResponse::build(StatusCode::NOT_FOUND).json(web::Json(AppResponse {
             data: None,
@@ -117,3 +119,4 @@ pub async fn delete_single_task(
         })),
     }
 }
+

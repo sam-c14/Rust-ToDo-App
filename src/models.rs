@@ -2,10 +2,17 @@ use serde::{Deserialize, Serialize};
 use std::sync::{Mutex, MutexGuard};
 
 #[derive(Clone, Serialize, Deserialize)]
+pub enum TaskStatus {
+    Active,
+    Completed
+}
+
+#[derive(Clone, Serialize, Deserialize)]
 pub struct Task {
     pub id: usize,
     pub title: String,
     pub description: String,
+    pub status: Option<TaskStatus> 
 }
 
 #[derive(Serialize, Deserialize)]
@@ -22,6 +29,7 @@ pub type BorrowedDB<'a> = MutexGuard<'a, Vec<Task>>;
 pub struct UpdateTaskRequest {
     pub title: Option<String>,
     pub description: Option<String>,
+    pub status: Option<TaskStatus> 
 }
 
 #[derive(Serialize, Deserialize)]

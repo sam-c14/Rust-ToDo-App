@@ -1,4 +1,4 @@
-use crate::models::{BorrowedDB, Task};
+use crate::models::{BorrowedDB, Task, TaskStatus};
 
 use std::error::Error;
 
@@ -14,6 +14,7 @@ pub fn create_task(
             id: 0,
             title,
             description,
+            status: Some(TaskStatus::Active),
         };
 
         if task_db.len() > 0 {
@@ -57,6 +58,7 @@ pub fn update_task(
     mut task_db: BorrowedDB,
     title: Option<String>,
     description: Option<String>,
+    status: Option<TaskStatus>,
 ) -> Result<Task, Box<dyn Error>> {
     let mut updated_task: Option<Task> = None;
 
@@ -72,10 +74,16 @@ pub fn update_task(
                 None => {}
             }
 
+            match status {
+                Some(ref updated_status) => task.status = Some(updated_status.clone()),
+                None => {}
+            }
+
             updated_task = Some(Task {
                 id: task.id,
                 title: task.title.to_string(),
                 description: task.description.to_string(),
+                status: task.status.clone(),
             });
         }
     }
