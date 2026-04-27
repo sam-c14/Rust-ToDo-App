@@ -13,6 +13,9 @@ A high-performance, thread-safe CRUD Todo API built with **Rust** and **Actix-we
 
 ---
 
+## Architecural Pattern
+The project follows a standard MVC pattern with the models, controllers and views(routes) clearly seperated with an extra custom layer for interacting with the custom db exposing these functions to be used in the controllers.
+
 ## 🛰 API Endpoints
 
 The API is grouped under the `/tasks` scope.
